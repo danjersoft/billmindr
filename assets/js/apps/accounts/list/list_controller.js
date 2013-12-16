@@ -1,6 +1,9 @@
 BillMindr.module('AccountsApp.List', function(List, BillMindr, Backbone, Marionette, $, _) {
     List.Controller = {
         listAccounts: function() {
+            var loadingView = new BillMindr.Common.Views.Loading();
+            BillMindr.mainRegion.show(loadingView);
+
             var fetchingAccounts = BillMindr.request('account:entities');
             $.when(fetchingAccounts).done(function(accounts) {
                 var accountsListView = new List.Accounts({
