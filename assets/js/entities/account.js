@@ -3,35 +3,52 @@ BillMindr.module('Entities', function(Entities, BillMindr, Backbone, Marionette,
         defaults: {
             phoneNum: '',
             webSite: 'www...'
-        }
+        },
+        urlRoot: 'accounts'
     });
+    Entities.configureStorage(Entities.Account);
     Entities.AccountCollection = Backbone.Collection.extend({
         model: Entities.Account,
-        comparator: 'name'
+        comparator: 'name',
+        url: 'accounts'
     });
+    //Entities.configureStorage(Entities.AccountCollection);
 
-    var accounts;
+    //var accounts;
 
     var initializeAccounts = function() {
-        accounts = new Entities.AccountCollection([
+        var accounts = new Entities.AccountCollection([
             { id: 1, name: 'Chase', phoneNum: '888...', webSite: 'chase.com'
             }, { id: 2, name: 'USAA', phoneNum: '888...', webSite: 'usaa.com'
             }, { id: 3, name: 'Citi', phoneNum: '888...', webSite: 'citi.com'
             }
-
         ]);
+        accounts.forEach(function(account) {
+            account.save();
+        });
+        return accounts;
     };
 
     var API = {
         getAccountEntities: function() {
-            if (accounts === undefined) {
-                initializeAccounts();
+            var accounts = new Entities.AccountCollection();
+            accounts.fetch();
+            if (accounts.length === 0) {
+                return initializeAccounts();
             }
             return accounts;
+        },
+        getAccountEntity: function(accountId) {
+            var account = new Entities.Account({ id: accountId });
+            account.fetch();
+            return account;
         }
     };
 
     BillMindr.reqres.setHandler('account:entities', function() {
         return API.getAccountEntities();
+    });
+    BillMindr.reqres.setHandler('account:entity', function(id) {
+        return API.getAccountEntity(id);
     });
 });

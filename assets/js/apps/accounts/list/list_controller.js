@@ -7,10 +7,10 @@ BillMindr.module('AccountsApp.List', function(List, BillMindr, Backbone, Marione
             });
             BillMindr.mainRegion.show(accountsListView);
             accountsListView.on('itemview:account:delete', function(childView, model) {
-                accounts.remove(model);
+                model.destroy();
             });
             accountsListView.on('itemview:account:show', function(childView, model) {
-                console.log('Received itemview:account:show event on model', model);
+                BillMindr.trigger('account:show', model.get('id'));
             });
         }
     }
