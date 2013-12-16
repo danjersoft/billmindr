@@ -12,7 +12,7 @@ BillMindr.module('Entities', function(Entities, BillMindr, Backbone, Marionette,
         comparator: 'name',
         url: 'accounts'
     });
-    //Entities.configureStorage(Entities.AccountCollection);
+    Entities.configureStorage(Entities.AccountCollection);
 
     //var accounts;
 
@@ -26,22 +26,42 @@ BillMindr.module('Entities', function(Entities, BillMindr, Backbone, Marionette,
         accounts.forEach(function(account) {
             account.save();
         });
-        return accounts;
+        return accounts.models;
     };
 
     var API = {
         getAccountEntities: function() {
             var accounts = new Entities.AccountCollection();
-            accounts.fetch();
-            if (accounts.length === 0) {
-                return initializeAccounts();
-            }
-            return accounts;
+            var defer = $.Deferred();
+            accounts.fetch({
+                success: function(data) {
+                    defer.resolve(data);
+                }
+            });
+            var promise = defer.promise();
+            $.when(promise).done(function(accounts) {
+                if (accounts.length === 0) {
+                    var models = initializeAccounts();
+                    accounts.reset(models);
+                }
+            });
+            return promise;
         },
         getAccountEntity: function(accountId) {
             var account = new Entities.Account({ id: accountId });
-            account.fetch();
-            return account;
+            var defer = $.Deferred();
+            setTimeout(function() {
+                account.fetch({
+                    success: function(data) {
+                        defer.resolve(data);
+                    },
+                    error: function(data) {
+                        defer.resolve(undefined);
+                    }
+                });
+            }, 2000);
+            //account.fetch();
+            return defer.promise();
         }
     };
 
