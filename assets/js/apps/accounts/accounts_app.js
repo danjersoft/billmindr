@@ -2,7 +2,8 @@ BillMindr.module('AccountsApp', function(AccountsApp, BillMindr, Backbone, Mario
     AccountsApp.Router = Marionette.AppRouter.extend({
         appRoutes: {
             "accounts": "listAccounts",
-            "accounts/:id": "showAccount"
+            "accounts/:id": "showAccount",
+            "accounts/:id/edit": "editAccount"
         }
     });
 
@@ -12,6 +13,9 @@ BillMindr.module('AccountsApp', function(AccountsApp, BillMindr, Backbone, Mario
         },
         showAccount: function(id) {
             AccountsApp.Show.Controller.showAccount(id);
+        },
+        editAccount: function(id) {
+            AccountsApp.Edit.Controller.editAccount(id);
         }
     };
 
@@ -19,10 +23,13 @@ BillMindr.module('AccountsApp', function(AccountsApp, BillMindr, Backbone, Mario
         BillMindr.navigate('accounts');
         API.listAccounts();
     });
-
     BillMindr.on('account:show', function(id) {
         BillMindr.navigate('accounts/' + id);
         API.showAccount(id);
+    });
+    BillMindr.on('account:edit', function(id) {
+        BillMindr.navigate('accounts/' + id + '/edit');
+        API.editAccount(id);
     });
 
     BillMindr.addInitializer(function() {

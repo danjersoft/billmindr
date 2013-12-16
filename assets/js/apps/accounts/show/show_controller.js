@@ -17,6 +17,9 @@ BillMindr.module('AccountsApp.Show', function(Show, BillMindr, Backbone, Marione
                     accountView = new Show.Account({
                         model: account
                     });
+                    accountView.on('account:edit', function(account) {
+                        BillMindr.trigger('account:edit', account.get('id'));
+                    });
                 }
                 BillMindr.mainRegion.show(accountView);
             });

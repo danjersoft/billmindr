@@ -49,6 +49,8 @@
     <script type="text/template" id="account-view">
         <h1><%= name %></h1>
         <p><strong>Web Site:</strong> <%= webSite %></p>
+        <p><strong>Phone Number:</strong> <%= phoneNum %></p>
+        <p><a href="#accounts/<%= id %>/edit" class="btn btn-default js-edit"><i class="glyphicon glyphicon-edit"></i> Edit Account</a></p>
     </script>
     <script type="text/template" id="missing-account-view">
         <div class="alert alert-danger">This Account does not exist!</div>
@@ -58,6 +60,24 @@
         <p><%= message %></p>
         <div id="spinner"></div>
     </script>
+    <script type="text/template" id="account-form">
+        <h1>Edit <%= name %></h1>
+        <form>
+            <div class="control-group">
+                <label for="account-name" class="control-label">Name:</label>
+                <input id="account-name" name="name" type="text" value="<%= name %>" class="form-control">
+            </div>
+            <div class="control-group">
+                <label for="account-phoneNum" class="control-label">Phone Number:</label>
+                <input id="account-phoneNum" name="phoneNum" type="text" value="<%= phoneNum %>" class="form-control">
+            </div>
+            <div class="control-group">
+                <label for="account-webSite" class="control-label">Web Site:</label>
+                <input id="account-webSite" name="webSite" type="text" value="<%= webSite %>" class="form-control">
+            </div>
+            <button class="btn btn-primary js-submit">Save</button>
+        </form>
+    </script>
 
     <script type="text/javascript" src="./bower_components/marionette/public/javascripts/jquery.js"></script>
     <script type="text/javascript" src="./bower_components/marionette/public/javascripts/json2.js"></script>
@@ -66,6 +86,7 @@
     <script type="text/javascript" src="./bower_components/marionette/public/javascripts/backbone.babysitter.js"></script>
     <script type="text/javascript" src="./bower_components/marionette/public/javascripts/backbone.wreqr.js"></script>
     <script type="text/javascript" src="./bower_components/marionette/public/javascripts/backbone.augment.js"></script>
+    <script type="text/javascript" src="./bower_components/backbone.syphon/lib/backbone.syphon.js"></script>
     <script type="text/javascript" src="./bower_components/backbone.localstorage/backbone.localStorage.js"></script>
     <script type="text/javascript" src="./bower_components/marionette/lib/core/backbone.marionette.min.js"></script>
     <script type="text/javascript" src="./bower_components/spinjs/spin.js"></script>
@@ -79,6 +100,8 @@
     <script src="./assets/js/apps/accounts/list/list_controller.js"></script>
     <script src="./assets/js/apps/accounts/show/show_controller.js"></script>
     <script src="./assets/js/apps/accounts/show/show_view.js"></script>
+    <script src="./assets/js/apps/accounts/edit/edit_view.js"></script>
+    <script src="./assets/js/apps/accounts/edit/edit_controller.js"></script>
     <script>
         BillMindr.start();
     </script>
