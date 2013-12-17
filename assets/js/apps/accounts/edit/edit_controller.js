@@ -17,8 +17,11 @@ BillMindr.module('AccountsApp.Edit', function(Edit, BillMindr, Backbone, Marione
                         model: account
                     });
                     view.on('form:submit', function(data) {
-                        account.save(data);
-                        BillMindr.trigger('account:show', account.get('id'));
+                        if (account.save(data)) {
+                            BillMindr.trigger('account:show', account.get('id'));
+                        } else {
+                            view.triggerMethod('form:data:invalid', account.validationError);
+                        }
                     });
                 }
                 BillMindr.mainRegion.show(view);

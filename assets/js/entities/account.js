@@ -4,7 +4,19 @@ BillMindr.module('Entities', function(Entities, BillMindr, Backbone, Marionette,
             phoneNum: '',
             webSite: 'www...'
         },
-        urlRoot: 'accounts'
+        urlRoot: 'accounts',
+        validate: function(attrs, options) {
+            var errors = {};
+            if (!attrs.name) {
+                errors.name = "can't be blank";
+            }
+            if (attrs.webSite.length < 5) {
+                errors.webSite = "is too short";
+            }
+            if (!_.isEmpty(errors)) {
+                return errors;
+            }
+        }
     });
     Entities.configureStorage(Entities.Account);
     Entities.AccountCollection = Backbone.Collection.extend({
