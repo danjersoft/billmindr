@@ -1,7 +1,11 @@
 var BillMindr = new Marionette.Application();
 
 BillMindr.addRegions({
-    mainRegion: '#main-region'
+    headerRegion: '#header-region',
+    mainRegion: '#main-region',
+    dialogRegion: Marionette.Region.Dialog.extend({
+        el: '#dialog-region'
+    })
 });
 
 BillMindr.navigate = function(route, options) {

@@ -3,31 +3,54 @@
     <head>
         <title>BillMindr</title>
         <link rel="stylesheet" href="./bower_components/bootstrap/dist/css/bootstrap.min.css" type="text/css" />
+        <link rel="stylesheet" href="./bower_components/bootstrap/dist/css/bootstrap-theme.min.css" type="text/css" />
+        <link rel="stylesheet" href="./bower_components/jquery-ui-bootstrap/jquery.ui.theme.css" type="text/css" />
+        <link rel="stylesheet" href="./bower_components/jquery-ui-bootstrap/jquery.ui.theme.font-awesome.css" type="text/css" />
         <style type="text/css">
             body { padding-top: 70px; }
         </style>
     </head>
     <body>
-
-    <div class="navbar navbar-inverse navbar-fixed-top">
-    <div class="container">
-    <div class="navbar-header">
-    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-      <span class="sr-only">Toggle navigation</span>
-      <span class="icon-bar"></span>
-      <span class="icon-bar"></span>
-      <span class="icon-bar"></span>
-    </button>
-    <a class="navbar-brand" href="./index.html">BillMindr</a>
-      </div></div>
-</div>
-
+    <div id="header-region"></div>
     <div id="main-region" class="container">
     static content
     </div>
+    <div id="dialog-region"></div>
 
-    <script type="text/template" id="static-template">
-        <p>content rendered by Marionette</p>
+    <script type="text/template" id="header-template">
+    <div class="container">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#accounts">BillMindr</a>
+      </div>
+      <div class="collapse navbar-collapse">
+        <ul class="nav navbar-nav">
+        </ul>
+      </div>
+    </div>
+    </script>
+    <script type="text/template" id="header-link">
+        <a href="#<%= url %>"><%= name %></a>
+    </script>
+    <script type="text/template" id="account-list-layout">
+        <div id="panel-region"></div>
+        <div id="accounts-region"></div>
+    </script>
+    <script type="text/template" id="account-list-panel">
+        <button class="btn btn-primary js-new">New Account</button>
+        <form id="filter-form" class="form-inline pull-right col-md-5">
+            <div class="input-group">
+                <input type="text" class="form-control js-filter-criterion">
+                <span class="input-group-btn">
+                    <button type="submit" class="btn btn-default">Filter Accounts</button>
+                </span>
+            </div>
+        </form>
     </script>
     <script type="text/template" id="account-template">
         <p><%= name %></p>
@@ -36,6 +59,7 @@
         <td><%= name %></td><td><%= webSite %>
         <td>
             <a href="#accounts/<%= id %>" class="btn btn-default btn-sm js-show"><i class="glyphicon glyphicon-eye-open"></i> Show</a>
+            <a href="#accounts/<%= id %>/edit" class="btn btn-default btn-sm js-edit"><i class="glyphicon glyphicon-edit"></i> Edit</a>
             <button class="btn btn-default btn-sm js-delete"><i class="glyphicon glyphicon-remove"></i> Delete</button>
         </td>
     </script>
@@ -78,11 +102,22 @@
             <button class="btn btn-primary js-submit">Save</button>
         </form>
     </script>
+    <script type="text/template" id="account-list-none">
+        <td colspan="3">No accounts to display</td>
+    </script>
+    <script type="text/template" id="about-message">
+        <h1>About this application</h1>
+        <p>This application was designed to accompany you during your learning.</p>
+        <p>Hopefully, it has served you well !</p>
+    </script>
 
     <script type="text/javascript" src="./bower_components/marionette/public/javascripts/jquery.js"></script>
+    <!--script src="./bower_components/bootstrap/dist/js/bootstrap.min.js"></script-->
+    <script src="./bower_components/jquery-ui/ui/minified/jquery-ui.min.js"></script>
     <script type="text/javascript" src="./bower_components/marionette/public/javascripts/json2.js"></script>
     <script type="text/javascript" src="./bower_components/marionette/public/javascripts/underscore.js"></script>
     <script type="text/javascript" src="./bower_components/marionette/public/javascripts/backbone.js"></script>
+    <script src="./bower_components/backbone.picky/lib/backbone.picky.min.js"></script>
     <script type="text/javascript" src="./bower_components/marionette/public/javascripts/backbone.babysitter.js"></script>
     <script type="text/javascript" src="./bower_components/marionette/public/javascripts/backbone.wreqr.js"></script>
     <script type="text/javascript" src="./bower_components/marionette/public/javascripts/backbone.augment.js"></script>
@@ -91,19 +126,34 @@
     <script type="text/javascript" src="./bower_components/marionette/lib/core/backbone.marionette.min.js"></script>
     <script type="text/javascript" src="./bower_components/spinjs/spin.js"></script>
     <script type="text/javascript" src="./bower_components/spinjs/jquery.spin.js"></script>
+
+    <script src="./assets/js/apps/config/marionette/regions/dialog.js"></script>
     <script src="./assets/js/app.js"></script>
     <script src="./assets/js/apps/config/storage/localstorage.js"></script>
+    <script src="./assets/js/entities/common.js"></script>
+    <script src="./assets/js/entities/header.js"></script>
     <script src="./assets/js/entities/account.js"></script>
     <script src="./assets/js/common/views.js"></script>
+    <script src="./assets/js/apps/header/header_app.js"></script>
+    <script src="./assets/js/apps/header/list/list_view.js"></script>
+    <script src="./assets/js/apps/header/list/list_controller.js"></script>
     <script src="./assets/js/apps/accounts/accounts_app.js"></script>
+    <script src="./assets/js/apps/accounts/common/views.js"></script>
+    <script src="./assets/js/apps/accounts/edit/edit_view.js"></script>
+    <script src="./assets/js/apps/accounts/edit/edit_controller.js"></script>
+    <script src="./assets/js/apps/accounts/new/new_view.js"></script>
     <script src="./assets/js/apps/accounts/list/list_view.js"></script>
     <script src="./assets/js/apps/accounts/list/list_controller.js"></script>
     <script src="./assets/js/apps/accounts/show/show_controller.js"></script>
     <script src="./assets/js/apps/accounts/show/show_view.js"></script>
-    <script src="./assets/js/apps/accounts/edit/edit_view.js"></script>
-    <script src="./assets/js/apps/accounts/edit/edit_controller.js"></script>
+    <script src="./assets/js/apps/about/about_app.js"></script>
+    <script src="./assets/js/apps/about/show/show_view.js"></script>
+    <script src="./assets/js/apps/about/show/show_controller.js"></script>
     <script>
         BillMindr.start();
+        //$('body').on('hidden.bs.modal', '.modal', function () {
+        //    $(this).removeData('bs.modal');
+        //});
     </script>
     </body>
 </html>

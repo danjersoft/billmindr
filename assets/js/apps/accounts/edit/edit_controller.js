@@ -14,7 +14,8 @@ BillMindr.module('AccountsApp.Edit', function(Edit, BillMindr, Backbone, Marione
                     view = new BillMindr.AccountsApp.Show.MissingAccount();
                 } else {
                     view = new Edit.Account({
-                        model: account
+                        model: account,
+                        generateTitle: true
                     });
                     view.on('form:submit', function(data) {
                         if (account.save(data)) {
