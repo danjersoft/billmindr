@@ -12,9 +12,7 @@
     </head>
     <body>
     <div id="header-region"></div>
-    <div id="main-region" class="container">
-    static content
-    </div>
+    <div id="main-region" class="container">static content</div>
     <div id="dialog-region"></div>
 
     <script type="text/template" id="header-template">
@@ -37,38 +35,8 @@
     <script type="text/template" id="header-link">
         <a href="#<%= url %>"><%= name %></a>
     </script>
-    <script type="text/template" id="account-list-layout">
-        <div id="panel-region"></div>
-        <div id="accounts-region"></div>
-    </script>
-    <script type="text/template" id="account-list-panel">
-        <button class="btn btn-primary js-new">New Account</button>
-        <form id="filter-form" class="form-inline pull-right col-md-5">
-            <div class="input-group">
-                <input type="text" class="form-control js-filter-criterion">
-                <span class="input-group-btn">
-                    <button type="submit" class="btn btn-default">Filter Accounts</button>
-                </span>
-            </div>
-        </form>
-    </script>
     <script type="text/template" id="account-template">
         <p><%= name %></p>
-    </script>
-    <script type="text/template" id="account-list-item">
-        <td><%= name %></td><td><%= webSite %>
-        <td>
-            <a href="#accounts/<%= id %>" class="btn btn-default btn-sm js-show"><i class="glyphicon glyphicon-eye-open"></i> Show</a>
-            <a href="#accounts/<%= id %>/edit" class="btn btn-default btn-sm js-edit"><i class="glyphicon glyphicon-edit"></i> Edit</a>
-            <button class="btn btn-default btn-sm js-delete"><i class="glyphicon glyphicon-remove"></i> Delete</button>
-        </td>
-    </script>
-    <script type="text/template" id="account-list">
-        <thead>
-            <tr><th>Name</th><th>Web Site</th><th>&nbsp;</th></tr>
-        </thead>
-        <tbody>
-        </tbody>
     </script>
     <script type="text/template" id="account-view">
         <h1><%= name %></h1>
@@ -102,17 +70,14 @@
             <button class="btn btn-primary js-submit">Save</button>
         </form>
     </script>
-    <script type="text/template" id="account-list-none">
-        <td colspan="3">No accounts to display</td>
-    </script>
     <script type="text/template" id="about-message">
         <h1>About this application</h1>
         <p>This application was designed to accompany you during your learning.</p>
         <p>Hopefully, it has served you well !</p>
     </script>
 
+    <!--
     <script type="text/javascript" src="./bower_components/marionette/public/javascripts/jquery.js"></script>
-    <!--script src="./bower_components/bootstrap/dist/js/bootstrap.min.js"></script-->
     <script src="./bower_components/jquery-ui/ui/minified/jquery-ui.min.js"></script>
     <script type="text/javascript" src="./bower_components/marionette/public/javascripts/json2.js"></script>
     <script type="text/javascript" src="./bower_components/marionette/public/javascripts/underscore.js"></script>
@@ -126,7 +91,8 @@
     <script type="text/javascript" src="./bower_components/marionette/lib/core/backbone.marionette.min.js"></script>
     <script type="text/javascript" src="./bower_components/spinjs/spin.js"></script>
     <script type="text/javascript" src="./bower_components/spinjs/jquery.spin.js"></script>
-
+    -->
+    <!--
     <script src="./assets/js/apps/config/marionette/regions/dialog.js"></script>
     <script src="./assets/js/app.js"></script>
     <script src="./assets/js/apps/config/storage/localstorage.js"></script>
@@ -155,5 +121,7 @@
         //    $(this).removeData('bs.modal');
         //});
     </script>
+    -->
+    <script src="./assets/js/vendor/requirejs/require.js" data-main="./assets/js/require_main.js"></script>
     </body>
 </html>
